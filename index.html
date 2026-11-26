@@ -5,30 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Penghitung Placemark Google Earth</title>
 <style>
-:root{--bg:#f6f7f9;--card:#fff;--text:#1b1f24;--muted:#667085;--line:#e3e6ea;--accent:#1a73e8;--accent-soft:#e8f0fe;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1d2127;--text:#e8eaed;--muted:#9aa3ad;--line:#2d333b;--accent:#6ea8fe;--accent-soft:#1e2a3d}}
-:root[data-theme="dark"]{--bg:#14171c;--card:#1d2127;--text:#e8eaed;--muted:#9aa3ad;--line:#2d333b;--accent:#6ea8fe;--accent-soft:#1e2a3d}
+:root{--bg:#eef2f8;--card:#fff;--text:#16202e;--muted:#6b7686;--line:#e1e7ef;--accent:#1565c0;--accent-soft:#e6f0fd;--shadow:0 8px 30px rgba(21,60,120,.10);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141a;--card:#1a2029;--text:#e8edf4;--muted:#93a0b2;--line:#2a3340;--accent:#6ea8fe;--accent-soft:#1c2b44;--shadow:0 8px 30px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#10141a;--card:#1a2029;--text:#e8edf4;--muted:#93a0b2;--line:#2a3340;--accent:#6ea8fe;--accent-soft:#1c2b44;--shadow:0 8px 30px rgba(0,0,0,.35)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-header{background:linear-gradient(90deg,#0d47a1,#1976d2);color:#fff;padding:18px 16px;box-shadow:0 2px 14px rgba(13,71,161,.28)}
-.hd{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:16px}
-.logo{width:64px;height:64px;flex:none;border-radius:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center}
-.hd h1{font-size:1.3rem;letter-spacing:.4px;margin:0;text-transform:uppercase}
-.hd p{margin:2px 0 0;font-size:.92rem}
-.hd small{display:block;font-size:.75rem;opacity:.8;margin-top:3px}
-main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
-h1{font-size:1.4rem;margin:0 0 4px}
-.sub{color:var(--muted);margin:0 0 16px;font-size:.95rem}
-textarea{width:100%;height:220px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
-textarea:focus{outline:2px solid var(--accent);border-color:transparent}
-.total{margin-top:16px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:14px;padding:18px;text-align:center}
-.total .n{font-size:3rem;font-weight:700;color:var(--accent);line-height:1}
-.total .l{color:var(--muted);margin-top:4px}
-.types{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.9rem}
-.chip b{margin-left:4px}
-.err{color:#d93025;margin-top:12px}
-button{margin-top:10px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;min-height:100vh}
+header{position:relative;overflow:hidden;background:linear-gradient(100deg,#0b3d91 0%,#1565c0 55%,#1e88e5 100%);color:#fff;padding:22px 24px 64px}
+header::before{content:"";position:absolute;right:-80px;top:-120px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),rgba(255,255,255,0) 70%)}
+header::after{content:"";position:absolute;right:140px;bottom:-140px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,0) 70%)}
+.hd{position:relative;z-index:1;display:flex;align-items:center;gap:16px}
+.logo{width:64px;height:64px;flex:none;border-radius:16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.hd h1{font-size:1.35rem;letter-spacing:.5px;margin:0;text-transform:uppercase}
+.hd p{margin:2px 0 0;font-size:.95rem}
+.hd small{display:block;font-size:.76rem;opacity:.8;margin-top:3px}
+main{max-width:860px;margin:-40px auto 0;padding:0 16px 40px;position:relative;z-index:2}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+.card+.card{margin-top:16px}
+.card-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:10px}
+.card-h b{font-size:1.05rem}
+.hint{color:var(--muted);font-size:.88rem}
+textarea{width:100%;height:230px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font:13px/1.45 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+textarea:focus{outline:2px solid var(--accent);border-color:transparent;background:var(--card)}
+.actions{display:flex;gap:8px;margin-top:12px}
+button{padding:9px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-size:.92rem;cursor:pointer;transition:.15s}
+button:hover{border-color:var(--accent);color:var(--accent)}
+.result{display:flex;flex-wrap:wrap;align-items:center;gap:18px 28px}
+.total{display:flex;align-items:center;gap:16px;min-width:210px}
+.pin{width:54px;height:54px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center;flex:none}
+.n{font-size:2.8rem;font-weight:800;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.l{color:var(--muted);font-size:.9rem;margin-top:2px}
+.types{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:200px}
+.chip{background:var(--accent-soft);border-radius:999px;padding:7px 15px;font-size:.9rem}
+.chip b{margin-left:6px;color:var(--accent)}
+.empty{color:var(--muted);font-size:.9rem}
+.err{color:#d93025;font-size:.92rem}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:18px}
+@media (max-width:520px){header{padding:18px 16px 60px}.logo{width:54px;height:54px}.hd h1{font-size:1.1rem}}
 </style>
 </head>
 <body>
@@ -43,14 +55,21 @@ button{margin-top:10px;padding:8px 14px;border:1px solid var(--line);border-radi
   </div>
 </header>
 <main>
-  <p class="sub">Tempel isi KML dari Google Earth di kotak bawah, jumlah Placemark langsung terhitung.</p>
-  <textarea id="kml" placeholder="Tempel KML di sini…" spellcheck="false"></textarea>
-  <button id="clear">Hapus</button>
-  <div id="out"></div>
+  <section class="card">
+    <div class="card-h"><b>Tempel KML</b><span class="hint">Salin dari Google Earth (Ctrl+C), lalu tempel di kotak ini.</span></div>
+    <textarea id="kml" placeholder="Tempel KML di sini…" spellcheck="false"></textarea>
+    <div class="actions"><button id="paste">Tempel dari clipboard</button><button id="clear">Hapus</button></div>
+  </section>
+  <section class="card result" id="out"></section>
+  <div class="foot">Diproses langsung di browser Anda · data tidak dikirim ke server</div>
 </main>
 <script>
 (function(){
   var ta=document.getElementById("kml"),out=document.getElementById("out");
+  var PIN='<div class="pin"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1565c0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg></div>';
+  function show(n,body){
+    out.innerHTML='<div class="total">'+PIN+'<div><div class="n">'+n+'</div><div class="l">Placemark</div></div></div><div class="types">'+body+'</div>';
+  }
   function typeOf(pm){
     var q=function(n){return pm.getElementsByTagNameNS("*",n).length};
     var t=[];
@@ -62,20 +81,24 @@ button{margin-top:10px;padding:8px 14px;border:1px solid var(--line);border-radi
   }
   function run(){
     var s=ta.value.trim();
-    if(!s){out.innerHTML="";return}
+    if(!s){show(0,'<span class="empty">Hasil akan muncul di sini setelah KML ditempel.</span>');return}
     var doc=new DOMParser().parseFromString(s,"text/xml");
     if(doc.getElementsByTagName("parsererror").length){
       var m=s.match(/<(?:\w+:)?Placemark[\s>]/g);
-      out.innerHTML='<div class="err">KML tidak valid atau terpotong.'+(m?" Perkiraan kasar: "+m.length+" Placemark.":"")+'</div>';
+      show(m?m.length:0,'<span class="err">KML tidak valid atau terpotong.'+(m?" Angka di samping hanya perkiraan kasar.":"")+'</span>');
       return;
     }
     var pms=Array.prototype.slice.call(doc.getElementsByTagNameNS("*","Placemark"));
     var c={};pms.forEach(function(p){var t=typeOf(p);c[t]=(c[t]||0)+1});
     var chips=Object.keys(c).sort(function(a,b){return c[b]-c[a]}).map(function(k){return '<span class="chip">'+k+'<b>'+c[k]+'</b></span>'}).join("");
-    out.innerHTML='<div class="total"><div class="n">'+pms.length+'</div><div class="l">Placemark</div></div><div class="types">'+chips+'</div>';
+    show(pms.length,chips||'<span class="empty">Tidak ada Placemark ditemukan.</span>');
   }
   ta.addEventListener("input",run);
   document.getElementById("clear").addEventListener("click",function(){ta.value="";run();ta.focus()});
+  document.getElementById("paste").addEventListener("click",function(){
+    try{navigator.clipboard.readText().then(function(t){ta.value=t;run()},function(){ta.focus()})}catch(e){ta.focus()}
+  });
+  run();
 })();
 </script>
 </body>
